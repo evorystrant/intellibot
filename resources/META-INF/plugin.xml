@@ -1,6 +1,6 @@
 <idea-plugin version="2">
     <id>com.millennialmedia.intellibot</id>
-    <name>IntelliBot</name>
+    <name>IntelliBot @SeleniumLibrary Patched</name>
     <version>0.10.143.381</version>
     <vendor email="intellibot@millennialmedia.com" url="http://www.millennialmedia.com">Millennial Media</vendor>
 
