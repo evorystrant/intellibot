@@ -8,6 +8,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.containers.MultiMap;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyFile;
+import com.jetbrains.python.psi.stubs.PyModuleNameIndex;
 import com.millennialmedia.intellibot.ide.icons.RobotIcons;
 import com.millennialmedia.intellibot.psi.dto.ImportType;
 import com.millennialmedia.intellibot.psi.dto.VariableDto;
@@ -385,8 +386,61 @@ public class HeadingImpl extends RobotPsiElementBase implements Heading {
                 }
             }
         }
+        findChildrenClass(files, "keywords");
         return files;
     }
+
+
+    /**
+     * search sibling library by keywords
+     * patch for SeleniumLibrary dynamic keywords
+     * support all libraries that contain "keywords" package.
+     * @param files  all pyClass
+     * @param libraryName  default search is keywords.
+     */
+    void findChildrenClass(Collection files,String libraryName){
+//        // this is temporary patch,each patch return All keywords from file
+        // Force Patch by Selenium
+//        String[] sourcelist = {
+//                "open_browser",
+//                "get_cookies",
+//                "input_text_into_prompt",
+//                "get_webelement",
+//                "submit_form",
+//                "select_frame",
+//                "execute_javascript",
+//                "register_keyword_to_run_on_failure",
+//                "set_screenshot_directory",
+//                "get_list_items",
+//                "get_table_cell",
+//                "wait_for_condition",
+//                "active_drivers",
+//                "create_driver",
+//                "select_window"
+//        };
+//        for (String str : sourcelist) {
+//            Collection<PyFunction> funcs = PyFunctionNameIndex.find(str, getProject());
+//            for (PyFunction pyfunc : funcs) {
+//                PyClass cs = pyfunc.getContainingClass();
+//                files.add(new RobotPythonClass(cs.getName(), cs, ImportType.LIBRARY));
+//            }
+//        }
+        Collection<PyFile> fileList=PyModuleNameIndex.find(libraryName,getProject(),true);
+        for(PyFile pyFile:fileList){
+            PyFile nextFile=pyFile;
+
+            while (nextFile!=null){
+                PsiElement[] all= nextFile.getChildren();
+                for(PsiElement psiElement:all){
+                    if(psiElement instanceof PyClass){
+                        files.add(new RobotPythonClass(((PyClass) psiElement).getName(), (PyClass) psiElement, ImportType.LIBRARY));
+                    }
+                }
+                nextFile= (PyFile) nextFile.getNextSibling();
+            }
+        }
+    }
+
 
     /**
      * Gets the namespace of the current import.  This looks for the 'WITH NAME' tag else returns the first argument.
