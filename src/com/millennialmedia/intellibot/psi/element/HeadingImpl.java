@@ -21,10 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 /**
  * @author Stephen Abrams
@@ -425,18 +422,23 @@ public class HeadingImpl extends RobotPsiElementBase implements Heading {
 //                files.add(new RobotPythonClass(cs.getName(), cs, ImportType.LIBRARY));
 //            }
 //        }
-        Collection<PyFile> fileList=PyModuleNameIndex.find(libraryName,getProject(),true);
-        for(PyFile pyFile:fileList){
-            PyFile nextFile=pyFile;
-
-            while (nextFile!=null){
-                PsiElement[] all= nextFile.getChildren();
-                for(PsiElement psiElement:all){
-                    if(psiElement instanceof PyClass){
+        Collection<PyFile> fileList = PyModuleNameIndex.find(libraryName, getProject(), true);
+        List<PsiFile> allFiles = new ArrayList<PsiFile>();
+        for (PyFile pyFile : fileList) {
+            if (pyFile.getParent() != null){
+                allFiles.addAll(Arrays.asList(pyFile.getParent().getFiles()));
+            }
+        }
+        for (PsiFile pyFile : allFiles) {
+            PsiFile nextFile = pyFile;
+            while (nextFile != null) {
+                PsiElement[] all = nextFile.getChildren();
+                for (PsiElement psiElement : all) {
+                    if (psiElement instanceof PyClass) {
                         files.add(new RobotPythonClass(((PyClass) psiElement).getName(), (PyClass) psiElement, ImportType.LIBRARY));
                     }
                 }
-                nextFile= (PyFile) nextFile.getNextSibling();
+                nextFile = (PyFile) nextFile.getNextSibling();
             }
         }
     }
