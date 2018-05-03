@@ -1,3 +1,9 @@
+## about fork
+patched for SeleniumLibrary keywords not found.
+
+  patch log:
+-  fix "click link" not found  (20180503)
+-  fix "open browser" not found 
 ## IntelliJ/PyCharm Plugin for Robot Automation Framework
 
 This is a work in progress (the product of a 24 hour hack match), though at this point I have devoted far more time than that.
