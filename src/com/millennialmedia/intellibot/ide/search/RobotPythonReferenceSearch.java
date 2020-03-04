@@ -25,13 +25,12 @@ import java.util.HashSet;
  * @author mrubino
  * @since 2016-01-04
  */
-public class RobotPythonReferenceSearch extends QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters> {
+public abstract class RobotPythonReferenceSearch extends QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters> {
 
     public RobotPythonReferenceSearch() {
         super(true);
     }
 
-    @Override
     public void processQuery(@NotNull ReferencesSearch.SearchParameters params, @NotNull Processor<PsiReference> processor) {
         SearchScope searchScope = params.getEffectiveSearchScope();
         boolean localScope = false;

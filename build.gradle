@@ -1,0 +1,74 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.4.16'
+}
+
+version = "${version}.$buildNumber"
+allprojects {
+  apply plugin: 'java'
+  sourceCompatibility = javaVersion
+  targetCompatibility = javaVersion
+  tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+  sourceSets {
+    main {
+      java.srcDirs 'src', 'gen'
+      resources.srcDirs 'resources', 'plugin/resources'
+    }
+    test {
+      java.srcDir 'test'
+    }
+  }
+
+  apply plugin: 'org.jetbrains.intellij'
+  intellij {
+    version ideaVersion
+    plugins = ['copyright', 'java']
+    downloadSources Boolean.valueOf(sources)
+    sameSinceUntilBuild Boolean.valueOf(isEAP)
+    alternativeIdePath localIdePath
+  }
+
+  def compilationPackages = ['com/millennialmedia/intellibot/build/**', 'com/millennialmedia/intellibot/jps/**']
+
+  test {
+    useJUnit {
+      exclude compilationPackages
+    }
+    testLogging {
+      exceptionFormat = 'full'
+    }
+  }
+
+  task testCompilation(type: Test, group: 'Verification', dependsOn: [classes, testClasses]) {
+    useJUnit {
+      include compilationPackages
+    }
+    testLogging {
+      exceptionFormat = 'full'
+    }
+    systemProperties = [
+      "python.sdk.path": System.getProperty("python.sdk.path")
+    ]
+  }
+}
+
+repositories {
+  flatDir {
+    dirs 'libs'
+  }
+}
+
+dependencies {
+  compile name: 'python-ce'
+}
+
+apply plugin: 'idea'
+idea {
+  project {
+    jdkName = javaVersion
+    languageLevel = javaVersion
+  }
+  module {
+    generatedSourceDirs += file('gen')
+  }
+}
