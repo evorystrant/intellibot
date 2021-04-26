@@ -266,7 +266,7 @@ public class RobotParser implements PsiParser {
     private static void parseWith(@NotNull PsiBuilder builder, @NotNull IElementType type) {
         PsiBuilder.Marker arg = builder.mark();
         IElementType current = builder.getTokenType();
-        while (!builder.eof() && current != null && (type == current || RobotTokenTypes.VARIABLE == current || RobotTokenTypes.VARIABLE_DEFINITION == current)) {
+        while (!builder.eof() && (type == current || RobotTokenTypes.VARIABLE == current || RobotTokenTypes.VARIABLE_DEFINITION == current)) {
             boolean end = isNextToken(builder, RobotTokenTypes.WHITESPACE);
             if (RobotTokenTypes.VARIABLE == current || RobotTokenTypes.VARIABLE_DEFINITION == current) {
                 parseSimple(builder, current);

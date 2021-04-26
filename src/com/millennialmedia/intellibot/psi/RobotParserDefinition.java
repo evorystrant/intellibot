@@ -81,10 +81,4 @@ public class RobotParserDefinition implements ParserDefinition {
     public PsiFile createFile(FileViewProvider viewProvider) {
         return new RobotFileImpl(viewProvider);
     }
-
-    @Override
-    public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-        // TODO: guessing this is for code cleanup
-        return null;
-    }
 }

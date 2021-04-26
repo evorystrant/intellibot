@@ -2,12 +2,12 @@ package com.millennialmedia.intellibot.psi;
 
 import com.intellij.lexer.LexerBase;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Stack;
+import static com.intellij.openapi.util.text.Strings.EMPTY_CHAR_SEQUENCE;
 
 public class RobotLexer extends LexerBase {
 
@@ -26,12 +26,12 @@ public class RobotLexer extends LexerBase {
     // we might run into max int issues at some point
     private static final int RATE = 12; // this should always be the last state + 1
     private final RobotKeywordProvider keywordProvider;
-    private CharSequence buffer = ArrayUtil.EMPTY_CHAR_SEQUENCE;
+    private CharSequence buffer = EMPTY_CHAR_SEQUENCE;
     private int startOffset;
     private int endOffset;
     private int position;
     private IElementType currentToken;
-    private Stack<Integer> level = new Stack<Integer>();
+    private Stack<Integer> level = new Stack<>();
 
     public RobotLexer(RobotKeywordProvider provider) {
         this.keywordProvider = provider;
@@ -70,7 +70,7 @@ public class RobotLexer extends LexerBase {
     }
 
     protected static Stack<Integer> fromState(int state) {
-        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<>();
         if (state > 0) {
             while (state > 0) {
                 stack.push(state % RATE);
@@ -283,9 +283,6 @@ public class RobotLexer extends LexerBase {
                         // next token may be another variable or a keyword
                         if (isVariable(this.position)) {
                             goToVariableEnd();
-//                            if (isVariableDefinition(this.position)) {
-//                                goToNextNewLineOrSuperSpace();
-//                            }
                             this.currentToken = RobotTokenTypes.VARIABLE_DEFINITION;
                         } else {
                             goToNextNewLineOrSuperSpace();
