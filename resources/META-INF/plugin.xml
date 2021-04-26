@@ -43,9 +43,7 @@
     </application-components>
 
     <project-components>
-        <component>
-            <implementation-class>com.millennialmedia.intellibot.psi.RobotPsiManager</implementation-class>
-        </component>
+        <!-- Add your project components here -->
     </project-components>
 
     <actions>
@@ -89,26 +87,26 @@
 
         <!-- Inspections -->
         <!-- Inspections: Compilation -->
-        <localInspection language="Robot" shortName="RobotKeywordNotFound" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotKeywordNotFound" bundle="messages.RobotBundle"
                          key="INSP.NAME.keyword.undefined" groupPath="Robot" groupKey="INSP.GROUP.compilation" enabledByDefault="true"
                          level="ERROR" implementationClass="com.millennialmedia.intellibot.ide.inspections.compilation.RobotKeywordNotFound"/>
-        <localInspection language="Robot" shortName="RobotVariableNotFound" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotVariableNotFound" bundle="messages.RobotBundle"
                          key="INSP.NAME.variable.undefined" groupPath="Robot" groupKey="INSP.GROUP.compilation" enabledByDefault="true"
                          level="ERROR" implementationClass="com.millennialmedia.intellibot.ide.inspections.compilation.RobotVariableNotFound"/>
-        <localInspection language="Robot" shortName="RobotImportNotFound" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotImportNotFound" bundle="messages.RobotBundle"
                          key="INSP.NAME.import.undefined" groupPath="Robot" groupKey="INSP.GROUP.compilation" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.compilation.RobotImportNotFound"/>
         <!-- TODO: inspection: error?: resource import is not a robot file -->
         <!-- TODO: inspection: warn: import python file vs class -->
         <!-- Inspections: Cleanup -->
-        <localInspection language="Robot" shortName="RobotImportNotUsed" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotImportNotUsed" bundle="messages.RobotBundle"
                          key="INSP.NAME.import.unused" groupPath="Robot" groupKey="INSP.GROUP.cleanup" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.cleanup.RobotImportNotUsed"/>
         <!-- Inspections: Readability -->
-        <localInspection language="Robot" shortName="RobotGherkinInspection" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotGherkinInspection" bundle="messages.RobotBundle"
                          key="INSP.NAME.gherkin.format" groupPath="Robot" groupKey="INSP.GROUP.readability" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.readability.RobotGherkinInspection"/>
-        <localInspection language="Robot" shortName="RobotKeywordDefinitionStartingWithGherkin" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotKeywordDefinitionStartingWithGherkin" bundle="messages.RobotBundle"
                          key="INSP.NAME.define.keyword.gherkin.start" groupPath="Robot" groupKey="INSP.GROUP.readability" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.readability.RobotKeywordDefinitionStartingWithGherkin"/>
         <!-- TODO: inspection: warn: use of I in keyword; decreased readability -->
@@ -119,10 +117,10 @@
         <!-- Inspections: Complexity -->
         <!-- TODO: inspection: warn: keyword definitions that contain gherkin; trying to do too much -->
         <!-- TODO: inspection: warn: scenarios longer than X lines; trying to do too much -->
-        <localInspection language="Robot" shortName="RobotNestedVariable" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotNestedVariable" bundle="messages.RobotBundle"
                          key="INSP.NAME.variable.nested" groupPath="Robot" groupKey="INSP.GROUP.complexity" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.complexity.RobotNestedVariable"/>
-        <localInspection language="Robot" shortName="RobotNestedVariableDefinition" bundle="com.millennialmedia.intellibot.RobotBundle"
+        <localInspection language="Robot" shortName="RobotNestedVariableDefinition" bundle="messages.RobotBundle"
                          key="INSP.NAME.variableDefinition.nested" groupPath="Robot" groupKey="INSP.GROUP.complexity" enabledByDefault="true"
                          level="WARNING" implementationClass="com.millennialmedia.intellibot.ide.inspections.complexity.RobotNestedVariableDefinition"/>
         <!-- Inspections: Deprecated -->

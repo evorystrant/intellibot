@@ -1,39 +1,32 @@
 package com.millennialmedia.intellibot;
 
-import com.intellij.CommonBundle;
-import com.intellij.reference.SoftReference;
+import com.intellij.DynamicBundle;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
-import java.lang.ref.Reference;
-import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 /**
  * @author mrubino
  */
-public class RobotBundle {
-
-    // based off python's
-
-    @NonNls
-    private static final String BUNDLE = "com.millennialmedia.intellibot.RobotBundle";
-
-    private static Reference<ResourceBundle> instance;
+public final class RobotBundle extends DynamicBundle {
+    // based off UIDesigners
+    @NonNls private static final String BUNDLE = "messages.RobotBundle";
+    private static final RobotBundle INSTANCE = new RobotBundle();
 
     private RobotBundle() {
+         super(BUNDLE);
     }
 
-    public static String message(@NonNls @PropertyKey(resourceBundle = BUNDLE) String key, Object... params) {
-        return CommonBundle.message(getBundle(), key, params);
+    @NotNull
+    public static @Nls String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object... params) {
+        return INSTANCE.getMessage(key, params);
     }
 
-    // Cached loading
-    private static ResourceBundle getBundle() {
-        ResourceBundle bundle = SoftReference.dereference(instance);
-        if (bundle == null) {
-            bundle = ResourceBundle.getBundle(BUNDLE);
-            instance = new SoftReference<ResourceBundle>(bundle);
-        }
-        return bundle;
+    @NotNull
+    public static Supplier<String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object... params) {
+        return INSTANCE.getLazyMessage(key, params);
     }
 }
